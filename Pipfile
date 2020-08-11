@@ -18,8 +18,9 @@ flask-migrate = "*"
 python-dotenv = "*"
 psycopg2-binary = "*"
 sqlalchemy = "*"
-wtforms = "*"
-flask-wtf = "*"
+flask-cors = "*"
+flask-jwt-extended = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.8"
