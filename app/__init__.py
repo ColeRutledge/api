@@ -2,9 +2,10 @@ from flask import Flask
 from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
-from app.models import db
-from app.config import Config
-from app.routes import bp
+
+from .models import db
+from .config import Config
+from .routes import main, user
 
 
 app = Flask(__name__)
@@ -13,5 +14,6 @@ CORS(app)
 db.init_app(app)
 jwt = JWTManager(app)
 migrate = Migrate(app, db)
-app.register_blueprint(bp)
+app.register_blueprint(main.bp)
+app.register_blueprint(user.bp)
 app.jinja_env.add_extension('pypugjs.ext.jinja.PyPugJSExtension')
