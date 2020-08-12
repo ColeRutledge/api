@@ -5,7 +5,7 @@ from flask_jwt_extended import JWTManager
 
 from .models import db
 from .config import Config
-from .routes import main, user
+from .routes import main, user, posting
 
 
 app = Flask(__name__)
@@ -16,4 +16,5 @@ jwt = JWTManager(app)
 migrate = Migrate(app, db)
 app.register_blueprint(main.bp)
 app.register_blueprint(user.bp)
+app.register_blueprint(posting.bp)
 app.jinja_env.add_extension('pypugjs.ext.jinja.PyPugJSExtension')

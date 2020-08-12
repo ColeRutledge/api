@@ -31,3 +31,25 @@ class User(db.Model):
 
   def to_dict(self):
     return {"id": self.id, "user_name": self.user_name, "first_name": self.first_name, "last_name": self.last_name, "email": self.email}
+
+
+class Posting(db.Model):
+  __tablename__ = 'postings'
+
+  id = db.Column(db.Integer, primary_key=True)
+  job_title = db.Column(db.String(255), nullable=False)
+  company = db.Column(db.String(255), nullable=False)
+  city = db.Column(db.String(100), nullable=False)
+  state = db.Column(db.String(50), nullable=False)
+  formatted_location = db.Column(db.String(255))
+  source = db.Column(db.String(255))
+  date = db.Column(db.DateTime)
+  snippet = db.Column(db.Text)
+  url = db.Column(db.Text, nullable=False)
+  latitude = db.Column(db.Float)
+  longitude = db.Column(db.Float)
+  job_key = db.Column(db.String(100))
+  expired = db.Column(db.Boolean)
+  indeed_apply = db.Column(db.Boolean)
+  ff_location = db.Column(db.String(255))
+  rel_time = db.Column(db.String(255))
