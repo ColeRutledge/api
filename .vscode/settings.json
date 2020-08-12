@@ -3,4 +3,7 @@
   "python.linting.pylintEnabled": true,
   "python.linting.pycodestyleEnabled": true,
   "python.linting.pylintArgs": ["--load-plugins", "pylint-flask"],
+  "files.exclude": {
+    "**/__pycache__": true
+  },
 }
