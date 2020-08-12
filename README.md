@@ -1,5 +1,11 @@
 # Boilerplate for Flask API App
 
+### Migrations
+- alembic [stamp head] to indicate that the current state of the database represents the application of all migrations
+```bash
+stamp head
+```
+
 ### Steps to Configure Project
 1. Edit Pipfile to determine required dependencies
 2. Install required dependencies
