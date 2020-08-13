@@ -1,8 +1,8 @@
-"""add postings table
+"""create users & postings tables
 
-Revision ID: 419a3b58f5c5
-Revises: 5f21fcfeba73
-Create Date: 2020-08-12 15:55:17.232109
+Revision ID: b59c65c6c022
+Revises: 
+Create Date: 2020-08-13 11:25:29.261448
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '419a3b58f5c5'
-down_revision = '5f21fcfeba73'
+revision = 'b59c65c6c022'
+down_revision = None
 branch_labels = None
 depends_on = None
 
