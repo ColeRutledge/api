@@ -21,6 +21,10 @@ def get_posts():
       'company': posting.company,
       'city': posting.city,
       'state': posting.state,
+      'formatted_location': posting.formatted_location,
+      'source': posting.source,
+      'rel_time': posting.rel_time,
+      'snippet': posting.snippet,
       'url': posting.url,
   } for posting in postings]
   return jsonify(res), 200
