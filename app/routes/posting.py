@@ -42,7 +42,6 @@ def create_posts():
     posting = postings[i]
     date = datetime.strptime(posting['date'], '%a, %d %b %Y %H:%M:%S %Z')
     new_posting = Posting(
-        id=len(Posting.query.all()) + 1,
         job_title=posting['jobtitle'],
         company=posting['company'],
         city=posting['city'],

@@ -5,6 +5,14 @@ from werkzeug.security import check_password_hash, generate_password_hash
 db = SQLAlchemy()
 
 
+bookmarks = db.Table(
+    'bookmarks',
+    db.Model.metadata,
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    db.Column('posting_id', db.Integer, db.ForeignKey('postings.id') primary_key=True)
+)
+
+
 class User(db.Model):
   __tablename__ = 'users'
 
@@ -14,6 +22,8 @@ class User(db.Model):
   last_name = db.Column(db.String(50), nullable=False)
   email = db.Column(db.String(255), nullable=False, unique=True)
   hashed_password = db.Column(db.String(128))
+
+  postings = db.Relationship('Posting', secondary=bookmarks, back_populates='users')
 
   @property
   def password(self):
@@ -53,3 +63,5 @@ class Posting(db.Model):
   indeed_apply = db.Column(db.Boolean)
   ff_location = db.Column(db.String(255))
   rel_time = db.Column(db.String(255))
+
+  users = db.Relationship('User', secondary=bookmarks, back_populates='postings')
