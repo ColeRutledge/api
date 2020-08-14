@@ -1,7 +1,7 @@
 from flask import Flask, Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required
 from sqlalchemy import exists
-from app.models import db, User
+from app.models import db, User, Search
 
 bp = Blueprint('user', __name__, url_prefix="/api/user")
 
@@ -35,7 +35,6 @@ def register():
     return {'error': 'User already exists. Please try again.'}
 
   new_user = {
-      'id': len(User.query.all()) + 1,
       'user_name': data['userName'],
       'first_name': data['firstName'],
       'last_name': data['lastName'],
@@ -44,6 +43,7 @@ def register():
 
   user = User(**new_user)
   user.set_password = data['password']
+  search = Search(user=user)
 
   print()
   print('*****USER ADDED*****', {**new_user, 'password': user.hashed_password[:30]})
@@ -69,3 +69,23 @@ def get_users():
       'password': user.password,
   } for user in users]
   return jsonify(res), 200
+
+
+# @bp.route('/test')
+# def test():
+#   print()
+#   print('********GETTING USER SETTINGS********')
+#   print()
+#   user_settings = UserSettings(user_id=1)
+#   res = {
+#       'user_id': user_settings.user_id,
+#       'search_radius': user_settings.search_radius,
+#       'tech_one': user_settings.tech_one,
+#       'tech_two': user_settings.tech_two,
+#       'tech_three': user_settings.tech_three,
+#   }
+
+#   db.session.add(user_settings)
+#   db.session.commit()
+
+#   return {'user_settings': res}, 200

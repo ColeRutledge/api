@@ -24,7 +24,7 @@ class User(db.Model):
   hashed_password = db.Column(db.String(128))
 
   postings = db.relationship('Posting', secondary=bookmarks, back_populates='users')
-  user_settings = db.relationship('UserSetting', back_populates='users', cascade='all, delete-orphan')
+  searches = db.relationship('Search', back_populates='user', cascade='all, delete-orphan')
 
   @property
   def password(self):
@@ -44,17 +44,16 @@ class User(db.Model):
     return {"id": self.id, "user_name": self.user_name, "first_name": self.first_name, "last_name": self.last_name, "email": self.email}
 
 
-class UserSetting(db.Model):
-  __tablename__ = 'user_settings'
+class Search(db.Model):
+  __tablename__ = 'searches'
 
   id = db.Column(db.Integer, primary_key=True)
   user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
   search_radius = db.Column(db.Integer, default=25, nullable=False)
-  tech_one = db.Column(db.String(50), default='javascript', nullable=False)
-  tech_two = db.Column(db.String(50), default='python', nullable=False)
-  tech_three = db.Column(db.String(50), default='react', nullable=False)
+  technologies = db.Column(db.JSON, default='javascript', nullable=False)
+  # market_id = db.Column(db.Integer, db.ForeignKey('markets.id'), nullable=False)
 
-  user = db.relationship('User', back_populates='user_settings')
+  user = db.relationship('User', back_populates='searches')
 
 
 class Posting(db.Model):
