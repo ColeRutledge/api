@@ -8,8 +8,8 @@ db = SQLAlchemy()
 bookmarks = db.Table(
     'bookmarks',
     db.Model.metadata,
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True)
-    db.Column('posting_id', db.Integer, db.ForeignKey('postings.id') primary_key=True)
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
+    db.Column('posting_id', db.Integer, db.ForeignKey('postings.id'), primary_key=True),
 )
 
 
@@ -23,7 +23,8 @@ class User(db.Model):
   email = db.Column(db.String(255), nullable=False, unique=True)
   hashed_password = db.Column(db.String(128))
 
-  postings = db.Relationship('Posting', secondary=bookmarks, back_populates='users')
+  postings = db.relationship('Posting', secondary=bookmarks, back_populates='users')
+  user_settings = db.relationship('UserSetting', back_populates='users', cascade='all, delete-orphan')
 
   @property
   def password(self):
@@ -41,6 +42,19 @@ class User(db.Model):
 
   def to_dict(self):
     return {"id": self.id, "user_name": self.user_name, "first_name": self.first_name, "last_name": self.last_name, "email": self.email}
+
+
+class UserSetting(db.Model):
+  __tablename__ = 'user_settings'
+
+  id = db.Column(db.Integer, primary_key=True)
+  user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+  search_radius = db.Column(db.Integer, default=25, nullable=False)
+  tech_one = db.Column(db.String(50), default='javascript', nullable=False)
+  tech_two = db.Column(db.String(50), default='python', nullable=False)
+  tech_three = db.Column(db.String(50), default='react', nullable=False)
+
+  user = db.relationship('User', back_populates='user_settings')
 
 
 class Posting(db.Model):
@@ -64,4 +78,4 @@ class Posting(db.Model):
   ff_location = db.Column(db.String(255))
   rel_time = db.Column(db.String(255))
 
-  users = db.Relationship('User', secondary=bookmarks, back_populates='postings')
+  users = db.relationship('User', secondary=bookmarks, back_populates='postings')
