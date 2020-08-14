@@ -6,6 +6,23 @@ from app.models import db, User, Search
 bp = Blueprint('user', __name__, url_prefix="/api/user")
 
 
+@bp.route('/<int:id>')
+def get_searches(id):
+  print()
+  print('********GETTING USER SEARCHES********')
+  print()
+  user_searches = Search.query.filter(Search.user_id == id).one()
+  print(user_searches)
+
+  searches = {
+      'user_id': user_searches.user_id,
+      'search_radius': user_searches.search_radius,
+      'technologies': user_searches.technologies,
+  }
+
+  return {'user_searches': searches}, 200
+
+
 @bp.route('/login', methods=['POST'])
 def login():
 
@@ -69,6 +86,9 @@ def get_users():
       'password': user.password,
   } for user in users]
   return jsonify(res), 200
+
+
+
 
 
 # @bp.route('/test')
