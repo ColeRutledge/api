@@ -8,26 +8,27 @@ from app.models import db, Posting
 bp = Blueprint('posting', __name__, url_prefix="/api/posting")
 
 
-# @bp.route('/', strict_slashes=False, methods=['GET'])
-# def get_posts():
-#   print()
-#   print('********GETTING POSTINGS********')
-#   print()
+@bp.route('/', strict_slashes=False, methods=['GET'])
+def get_posts():
+  print()
+  print('********GETTING POSTINGS********')
+  print()
 
-#   postings = Posting.query.order_by(Posting.state).all()
-#   res = [{
-#       'id': posting.id,
-#       'job_title': posting.job_title,
-#       'company': posting.company,
-#       'city': posting.city,
-#       'state': posting.state,
-#       'formatted_location': posting.formatted_location,
-#       'source': posting.source,
-#       'rel_time': posting.rel_time,
-#       'snippet': posting.snippet,
-#       'url': posting.url,
-#   } for posting in postings]
-#   return jsonify(res), 200
+  postings = Posting.query.all()
+  res = [{
+      'id': posting.id,
+      'search_terms': posting.search_terms,
+      'search_loc': posting.search_loc,
+      'title': posting.title,
+      'location': posting.location,
+      'company': posting.company,
+      'salary': posting.salary,
+      'date': posting.date,
+      # 'snippet': posting.snippet,
+      # 'description': posting.description,
+      # 'link': posting.link,
+  } for posting in postings]
+  return jsonify(res), 200
 
 
 # @bp.route('/add', methods=['GET'])
