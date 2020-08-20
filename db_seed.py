@@ -1,20 +1,33 @@
+import csv
 from dotenv import load_dotenv
 load_dotenv()
 
-from datetime import datetime
 from app import app, db
 from app.models import db, User, Posting
 
+csv_file_path = 'indeed_seed.csv'
 
-with app.app_context():
-  db.drop_all()
-  db.create_all()
+with open(csv_file_path, newline='', encoding='utf-8-sig') as f:
+  next(f)
+  reader = csv.reader(f)
 
-  date = datetime.now()
+  with app.app_context():
+    db.drop_all()
+    db.create_all()
 
-  user = User(user_name="Cole", first_name="Cole", last_name="Rutledge", email="cole@email.com", hashed_password="password1")
-  posting = Posting(job_title="Junior React Engineer", company="Discovery Education", city="Charlotte", state="NC", formatted_location="Charlotte, NC", source="LinkedIn", date=date, snippet="looking for junior react engineer with python experience", url="http://www.indeed.com/viewjob?jk=12345", latitude=30.27127, longitude=-97.74103, job_key="12345", expired=False, indeed_apply=True, ff_location="Charlotte, NC", rel_time="5 hours ago")
+    for row in reader:
+      posting = Posting(
+          search_terms=row[0],
+          search_loc=row[1],
+          title=row[2],
+          location=row[3],
+          company=row[4],
+          salary=row[5],
+          date=row[6],
+          snippet=row[7][:500],
+          description=row[7],
+          link=row[8],
+      )
+      db.session.add(posting)
 
-  db.session.add(user)
-  db.session.add(posting)
-  db.session.commit()
+    db.session.commit()
