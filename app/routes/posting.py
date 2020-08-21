@@ -13,24 +13,24 @@ def get_posts():
   print()
   print('********FETCH POSTINGS********')
   print()
-  # conditions = ['.net', '.NET', '.Net', '.Net Developer']
+  conditions = [
+      '.net',
+      'java ',
+      'qa ',
+      'c++',
+      'ios',
+      'devops',
+      'android',
+      'c#',
+      'senior',
+      'lead',
+      'manager',
+      'architect',
+      'director',
+  ]
 
-  # postings = Posting.query.all()
-  postings = Posting.query.filter(~or_(
-      Posting.title.ilike('%.net%'),
-      Posting.title.ilike('%java %'),
-      Posting.title.ilike('%devops %'),
-      Posting.title.ilike('%qa %'),
-      Posting.title.ilike('%senior%'),
-      Posting.title.ilike('%lead%'),
-      Posting.title.ilike('%architect%'),
-      Posting.title.ilike('%manager%'),
-      Posting.title.ilike('%director%'),
-      Posting.title.ilike('%c++%'),
-      Posting.title.ilike('%ios%'),
-      Posting.title.ilike('%android%'),
-      Posting.title.ilike('%c#%'),
-  ))
+  filters = [Posting.title.ilike(f'%{term}%') for term in conditions]
+  postings = Posting.query.filter(~or_(*filters))
 
   res = [{
       'id': posting.id,
