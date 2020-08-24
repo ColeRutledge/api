@@ -17,6 +17,8 @@ def get_posts():
 
   conditions = [
       '.net',
+      'dot net',
+      'dotnet',
       'java ',
       'java,',
       'qa ',

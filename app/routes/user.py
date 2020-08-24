@@ -121,8 +121,6 @@ def add_bookmark():
   print()
   current_user = get_jwt_identity()
   data = request.get_json()
-  print(data['row_id'])
-  print(data['checked'])
 
   user = User.query.get(current_user['id'])
   posting = Posting.query.get(data['row_id'])
