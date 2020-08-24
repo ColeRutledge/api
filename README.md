@@ -1,6 +1,6 @@
 ## To gain access to postgres inside container:
 ```bash
-docker container exec -it api /bin/sh
+docker container exec -it db /bin/sh
 psql -U capstone_app -W capstone_db
 ```
 
