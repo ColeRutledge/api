@@ -1,7 +1,7 @@
 from flask import Flask, Blueprint, jsonify, request
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from sqlalchemy import exists
-from app.models import db, User, Search
+from app.models import db, User, Search, Posting
 
 bp = Blueprint('user', __name__, url_prefix="/api/user")
 
@@ -88,8 +88,67 @@ def get_users():
   return jsonify(res), 200
 
 
+@bp.route('/bookmark', methods=['GET'])
+@jwt_required
+def get_bookmarks():
+  print()
+  print('********GETTING BOOKMARK********')
+  print()
+
+  current_user = get_jwt_identity()
+  user = User.query.get(current_user['id'])
+  res = [{
+      'id': posting.id,
+      'search_terms': posting.search_terms,
+      'search_loc': posting.search_loc,
+      'title': posting.title,
+      'location': posting.location,
+      'company': posting.company,
+      'salary': posting.salary,
+      'date': posting.date,
+      'snippet': posting.snippet,
+      'description': posting.description,
+      'link': posting.link,
+  } for posting in user.postings]
+  return jsonify(res), 200
 
 
+@bp.route('/bookmark', methods=['POST'])
+@jwt_required
+def add_bookmark():
+  print()
+  print('********ADDING BOOKMARK********')
+  print()
+  current_user = get_jwt_identity()
+  data = request.get_json()
+  print(data['row_id'])
+  print(data['checked'])
+
+  user = User.query.get(current_user['id'])
+  posting = Posting.query.get(data['row_id'])
+
+  if data['checked']:
+    user.postings.append(posting)
+  else:
+    user.postings.remove(posting)
+
+  db.session.commit()
+
+  res = [{
+      'id': posting.id,
+      'search_terms': posting.search_terms,
+      'search_loc': posting.search_loc,
+      'title': posting.title,
+      'location': posting.location,
+      'company': posting.company,
+      'salary': posting.salary,
+      'date': posting.date,
+      'snippet': posting.snippet,
+      'description': posting.description,
+      'link': posting.link,
+  } for posting in user.postings]
+
+  return jsonify(res), 201
 
 # @bp.route('/test')
 # def test():

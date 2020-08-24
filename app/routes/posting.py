@@ -18,6 +18,7 @@ def get_posts():
   conditions = [
       '.net',
       'java ',
+      'java,',
       'qa ',
       'c++',
       'ios',
@@ -29,6 +30,8 @@ def get_posts():
       'manager',
       'architect',
       'director',
+      'php',
+      'tableau',
   ]
 
   filters = [Posting.title.ilike(f'%{condition}%') for condition in conditions]
