@@ -2,6 +2,8 @@
 data.py
 # indeed_seed.csv
 scratch.py
+scratch.js
+indeed_seed.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

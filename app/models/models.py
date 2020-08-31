@@ -70,8 +70,34 @@ class Posting(db.Model):
   snippet = db.Column(db.Text, nullable=False)
   description = db.Column(db.Text, nullable=False)
   link = db.Column(db.Text, nullable=False)
+  formatted_sal = db.Column(db.Integer)
+  js_count = db.Column(db.Integer)
+  python_count = db.Column(db.Integer)
+  ruby_count = db.Column(db.Integer)
+  net_count = db.Column(db.Integer)
+  java_count = db.Column(db.Integer)
 
   users = db.relationship('User', secondary=bookmarks, back_populates='postings')
+
+
+class AvgMktSalary(db.Model):
+  __tablename__ = 'avg_mkt_salaries'
+
+  id = db.Column(db.Integer, primary_key=True)
+  search_terms = db.Column(db.String(100), nullable=False)
+  search_loc = db.Column(db.String(100), nullable=False)
+  formatted_sal = db.Column(db.Integer)
+
+
+class MarketMetric(db.Model):
+  __tablename__ = 'market_metrics'
+
+  id = db.Column(db.Integer, primary_key=True)
+  search_terms = db.Column(db.String(100), nullable=False)
+  search_loc = db.Column(db.String(100), nullable=False)
+  pos_counts_mkt = db.Column(db.Integer)
+  pos_pcts_mkt = db.Column(db.Float)
+  pos_overall_mkt_pct = db.Column(db.Float)
 
 
 # source = db.Column(db.String(255))

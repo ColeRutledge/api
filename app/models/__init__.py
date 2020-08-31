@@ -1,1 +1,1 @@
-from .models import db, User, Posting, Search
+from .models import db, User, Posting, Search, AvgMktSalary, MarketMetric
