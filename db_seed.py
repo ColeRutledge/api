@@ -13,6 +13,10 @@ with app.app_context():
   db.drop_all()
   db.create_all()
 
+  demo_user = User(user_name='Demo', first_name='Demo', last_name='User', email='demo_user@email.com')
+  demo_user.set_password = 'password1'
+  db.session.add(demo_user)
+
   with open(seed_positions_path, newline='', encoding='utf-8-sig') as f:
     next(f)
     reader = csv.reader(f)
