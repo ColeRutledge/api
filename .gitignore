@@ -1,12 +1,10 @@
 # Project Files
 data.py
-# indeed_seed.csv
 scratch.py
 scratch.js
-indeed_seed.csv
-seed_market_sals.csv
-seed_pos_metrics_mkt.csv
-seed_positions.csv
+# seed_market_sals.csv
+# seed_pos_metrics_mkt.csv
+# seed_positions.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
