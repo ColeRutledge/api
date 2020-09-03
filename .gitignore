@@ -7,7 +7,7 @@ indeed_seed.csv
 seed_market_sals.csv
 seed_pos_metrics_mkt.csv
 seed_positions.csv
-temp/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
