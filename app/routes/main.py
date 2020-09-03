@@ -8,11 +8,11 @@ colors = [
     'rgba(255, 99, 132, 0.2)',
     'rgba(75, 192, 192, 0.2)',
     'rgba(153, 102, 255, 0.2)',
-    'rgba(255, 240, 219, 0.2)',
-    'rgba(211, 78, 24, 0.2)',
-    'rgba(255, 139, 148, 0.2)',
-    'rgba(169, 205, 54, 0.2)',
     'rgba(30, 76, 118, 0.2)',
+    'rgba(211, 78, 24, 0.2)',
+    'rgba(169, 205, 54, 0.2)',
+    'rgba(255, 139, 148, 0.2)',
+    'rgba(255, 240, 219, 0.2)',
 ]
 
 
@@ -28,17 +28,28 @@ def get_avg_mkt_sals():
   print()
 
   salaries = AvgMktSalary.query.order_by(AvgMktSalary.search_loc).all()
+  labels = sorted(list(set([sal.search_loc for sal in salaries])))
 
   data = {
       'javascript': {
           'avg_salaries': [round(sal.formatted_sal / 1000, 1) for sal in salaries
                            if sal.search_terms == 'javascript developer'],
-          'labels': sorted(list(set([sal.search_loc for sal in salaries]))),
+          'labels': labels,
       },
       'python': {
           'avg_salaries': [round(sal.formatted_sal / 1000, 1) for sal in salaries
                            if sal.search_terms == 'python developer'],
-          'labels': sorted(list(set([sal.search_loc for sal in salaries]))),
+          'labels': labels,
+      },
+      'ruby': {
+          'avg_salaries': [round(sal.formatted_sal / 1000, 1) for sal in salaries
+                           if sal.search_terms == 'ruby developer'],
+          'labels': labels,
+      },
+      'java': {
+          'avg_salaries': [round(sal.formatted_sal / 1000, 1) for sal in salaries
+                           if sal.search_terms == 'java developer'],
+          'labels': labels,
       },
   }
 

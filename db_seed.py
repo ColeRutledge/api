@@ -35,7 +35,9 @@ with app.app_context():
           link=row[8],
           js_count=row[9],
           python_count=row[10],
-          formatted_sal=row[11] or None,
+          ruby_count=row[11],
+          java_count=row[12],
+          formatted_sal=row[13] or None,
           # formatted_sal=int(float(row[11])) if row[11] else 0,
       )
       db.session.add(posting)

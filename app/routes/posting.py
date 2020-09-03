@@ -16,8 +16,8 @@ def get_posts():
   print()
   # search = 'python developer'
   # search_count = 'python_count'
-  search = 'javascript developer'
-  search_count = 'js_count'
+  # search = 'javascript developer'
+  # search_count = 'js_count'
 
   conditions = [
       '.net',
@@ -57,6 +57,7 @@ def get_posts():
       'link': posting.link,
       'js_count': posting.js_count,
       'python_count': posting.python_count,
-  } for posting in postings if search in posting.search_terms and posting.js_count > 1]
+  } for posting in postings]
+  # } for posting in postings if search in posting.search_terms and posting.js_count > 1]
 
   return jsonify(res), 200
