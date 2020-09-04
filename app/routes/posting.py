@@ -8,23 +8,18 @@ from app.models import db, Posting
 bp = Blueprint('posting', __name__, url_prefix="/api/posting")
 
 
-@bp.route('/', strict_slashes=False, methods=['GET'])
+@bp.route('/', strict_slashes=False, methods=['GET', 'POST'])
 @jwt_required
 def get_posts():
   print()
   print('********FETCH POSTINGS********')
   print()
-  # search = 'python developer'
-  # search_count = 'python_count'
-  # search = 'javascript developer'
-  # search_count = 'js_count'
 
-  conditions = [
+  senior_filters = [
       '.net',
+      'net',
       'dot net',
       'dotnet',
-      'java ',
-      'java,',
       'qa ',
       'c++',
       'ios',
@@ -33,6 +28,8 @@ def get_posts():
       'c#',
       'senior',
       'lead',
+      'sr ',
+      'sr. ',
       'manager',
       'architect',
       'director',
@@ -40,8 +37,85 @@ def get_posts():
       'tableau',
   ]
 
-  filters = [Posting.title.ilike(f'%{condition}%') for condition in conditions]
-  postings = Posting.query.filter(~or_(*filters))
+  consulting_filters = [
+      '.net',
+      'net',
+      'dot net',
+      'dotnet',
+      'qa ',
+      'c++',
+      'ios',
+      'devops',
+      'android',
+      'c#',
+      'php',
+      'tableau',
+      'consulting',
+      'consultant',
+      'w2',
+      'contract',
+      'contracting',
+      'co-op',
+  ]
+
+  combined = [
+      'senior',
+      'lead',
+      'sr ',
+      'sr. ',
+      'manager',
+      'architect',
+      'director',
+      '.net',
+      'net',
+      'dot net',
+      'dotnet',
+      'qa ',
+      'c++',
+      'ios',
+      'devops',
+      'android',
+      'c#',
+      'php',
+      'tableau',
+      'consulting',
+      'consultant',
+      'w2',
+      'contract',
+      'contracting',
+  ]
+
+  default_filters = [
+      '.net',
+      'net',
+      'dot net',
+      'dotnet',
+      'qa ',
+      'c++',
+      'ios',
+      'devops',
+      'android',
+      'c#',
+      'php',
+      'tableau',
+  ]
+
+  if request.method == 'POST':
+    data = request.get_json()
+    if data['no_filter']:
+      filters = None
+    elif data['senior_filter'] and not data['consulting_filter']:
+      filters = [Posting.title.ilike(f'%{condition}%') for condition in senior_filters]
+    elif data['consulting_filter'] and not data['senior_filter']:
+      filters = [Posting.title.ilike(f'%{condition}%') for condition in consulting_filters]
+    elif data['senior_filter'] and data['consulting_filter']:
+      filters = [Posting.title.ilike(f'%{condition}%') for condition in combined]
+    else:
+      filters = [Posting.title.ilike(f'%{condition}%') for condition in default_filters]
+  else:
+    filters = [Posting.title.ilike(f'%{condition}%') for condition in combined]
+
+  postings = Posting.query.filter(~or_(*filters)) if filters else Posting.query.all()
 
   res = [{
       'id': posting.id,
