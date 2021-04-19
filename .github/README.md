@@ -1,4 +1,4 @@
-<h3 align='center'>This is the API server for powering my App Academy capstone project: <a href='https://github.com/ColeRutledge/pure_search'>PureSearch</a></h3>
+<h3 align='center'>This is a Flask API server for powering my App Academy capstone project. More details here: <a href='https://github.com/ColeRutledge/pure_search'>PureSearch</a></h3>
 
 ---
 
