@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+pip list
 pip3 install --upgrade pip
 pip3 install -r /app/requirements.txt
 python3 entry.py db upgrade
