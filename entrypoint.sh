@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 pip list
 pip3 install pip==20.1.1
+echo env
 pip list
 pip3 install -r /app/requirements.txt
 python3 entry.py db upgrade
